@@ -1,0 +1,50 @@
+pip install tensorflow scikit-learn matplotlib seaborn tensorflowjs
+
+Core Python Libraries:
+
+os - For file and directory operations
+numpy - For numerical operations and array handling
+
+
+TensorFlow/Keras:
+
+tensorflow - Main deep learning framework
+tensorflow.keras.preprocessing.image.ImageDataGenerator - For image loading and augmentation
+tensorflow.keras.applications.MobileNetV3Small - The base model architecture
+tensorflow.keras.models.Model - For model creation
+tensorflow.keras.layers - Neural network layers:
+
+Dense
+GlobalAveragePooling2D
+Dropout
+
+
+tensorflow.keras.optimizers.Adam - Optimizer algorithm
+tensorflow.keras.callbacks - Training callbacks:
+
+EarlyStopping
+ModelCheckpoint
+
+
+
+
+Scikit-learn:
+
+sklearn.utils.class_weight.compute_class_weight - For handling class imbalance
+sklearn.metrics - For model evaluation:
+
+classification_report
+confusion_matrix
+
+
+
+
+Visualization Libraries:
+
+matplotlib.pyplot - For plotting training history and evaluation metrics
+seaborn - For enhanced visualizations (confusion matrix heatmap)
+
+
+TensorFlow.js (for conversion):
+
+tensorflowjs - For converting the trained model to TensorFlow.js format
