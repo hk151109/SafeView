@@ -15,8 +15,6 @@ Together, these components create a robust content moderation solution suitable 
 - [Model Setup and Usage](#model-setup-and-usage)
 - [Chrome Extension Usage](#chrome-extension-usage)
 - [Model Details](#model-details)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Overview
 SafeView offers an all-in-one solution for NSFW content detection across both backend (model) and frontend (browser extension) applications. It is designed to ensure safe and user-friendly experiences by detecting inappropriate content in real time.
