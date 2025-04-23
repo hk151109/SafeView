@@ -461,12 +461,12 @@ def main():
     model, base_model = create_model()
     print(model.summary())
 
-    print("Step 3: Training the model with frozen base...")
-    history = train_model(model, train_ds, val_ds, class_weights)
+    # print("Step 3: Training the model with frozen base...")
+    # history = train_model(model, train_ds, val_ds, class_weights)
 
-    print("Step 4: Evaluating the initial model...")
-    base_evaluation = evaluate_model(model, test_ds)
-    plot_training_history(history)
+    # print("Step 4: Evaluating the initial model...")
+    # base_evaluation = evaluate_model(model, test_ds)
+    # plot_training_history(history)
     
     print("Step 5: Fine-tuning the model with selective block unfreezing...")
     ft_history = fine_tune_model(model, base_model, train_ds, val_ds, class_weights)
