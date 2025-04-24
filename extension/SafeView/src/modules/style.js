@@ -43,7 +43,7 @@ const setStyle = ({ detail: settings }) => {
     hbStyleSheet.innerHTML = `
     ${blurSelectors} {
       filter: blur(${_settings.getBlurAmount()}px) ${
-          _settings.isGray() ? "grayscale(100%)" : ""
+          _settings.isGray() ? "brightness(0%)" : ""
       } !important;
       transition: filter 0.1s ease !important;
       opacity: unset !important;
@@ -53,7 +53,7 @@ const setStyle = ({ detail: settings }) => {
     if (unblurSelectors) {
         hbStyleSheet.innerHTML += `
 		${unblurSelectors} {
-			filter: blur(0px) ${_settings.isGray() ? "grayscale(0%)" : ""} !important;
+			filter: blur(0px) ${_settings.isGray() ? "brightness(100%)" : ""} !important;
 			transition: filter 0.5s ease !important;
 			transition-delay: 1s !important;
 		  }
@@ -72,12 +72,12 @@ const setStyle = ({ detail: settings }) => {
 
 	@keyframes hb-blur-temp {
 		0% { filter: blur(${_settings.getBlurAmount()}px) ${
-            _settings.isGray() ? "grayscale(100%)" : ""
+            _settings.isGray() ? "brightness(0%)" : ""
         }; }
 		95% { filter: blur(${_settings.getBlurAmount()}px) ${
-            _settings.isGray() ? "grayscale(100%)" : ""
+            _settings.isGray() ? "brightness(0%)" : ""
         }; }
-		100% { filter: blur(0px) ${_settings.isGray() ? "grayscale(0%)" : ""}; }
+		100% { filter: blur(0px) ${_settings.isGray() ? "brightness(100%)" : ""}; }
 	}
   `;
 };

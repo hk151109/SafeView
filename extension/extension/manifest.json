@@ -1,0 +1,33 @@
+{
+    "manifest_version": 3,
+    "name": "SafeView",
+    "description": "Protect your privacy by auto detecting & blurring images and videos of unwanted explicit NSFW content.",
+    "version": "0.2.6",
+    "permissions": ["storage", "offscreen", "contextMenus"],
+    "author": "hk151109",
+    "action": {
+        "default_title": "SafeView",
+        "default_popup": "src/popup.html"
+    },
+    "minimum_chrome_version": "109",
+    "background": {
+        "service_worker": "src/background.js"
+    },
+    "icons": {
+        "48": "src/assets/sv-icon-48.png",
+        "128": "src/assets/sv-icon-128.png"
+    },
+    "content_scripts": [
+        {
+            "js": ["dist/content.js"],
+            "matches": ["https://*/*", "http://*/*"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["src/assets/*"],
+            "matches": ["https://*/*", "http://*/*"]
+        }
+    ]
+}

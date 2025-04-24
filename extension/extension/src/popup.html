@@ -1,0 +1,1124 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>SafeView Extension</title>
+        <style>
+            /* Base styles refined */
+body {
+    background-color: #f8f9ff;
+    color: #2d3748;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    transition: background-color 0.3s ease;
+}
+
+/* change body font to Tahoma if arabic */
+:lang(ar) body {
+    font-family: Tahoma, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #111827;
+        color: #f3f4f6;
+    }
+}
+
+.container {
+    min-width: 370px;
+    padding: 0rem 1rem 1.5rem 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Completely redesigned header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #9333ea 100%);
+    color: #fff;
+    padding: 1.5rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0px 0px 35px 35px;
+    z-index: 10;
+    box-shadow: 
+        0 10px 25px -5px rgba(107, 70, 193, 0.3),
+        0 8px 10px -6px rgba(107, 70, 193, 0.2);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Header background animation */
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(0deg);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.header:hover {
+    transform: translateY(2px);
+    box-shadow: 
+        0 15px 30px -5px rgba(107, 70, 193, 0.4),
+        0 10px 15px -3px rgba(107, 70, 193, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .header {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #8b5cf6 100%);
+        box-shadow: 
+            0 10px 25px -5px rgba(79, 70, 229, 0.4),
+            0 8px 10px -6px rgba(79, 70, 229, 0.3);
+    }
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    font-family: 'Poppins', sans-serif !important;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #fff;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.header h1:hover {
+    transform: translateY(-2px);
+}
+
+.header h1:hover::after {
+    width: 100%;
+}
+
+.header > * {
+    flex: 1;
+}
+
+/* last child self align right */
+.header > *:last-child {
+    text-align: right;
+}
+
+/* Completely redesigned switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    transition: all 0.3s ease;
+}
+
+.switch:hover {
+    transform: scale(1.05);
+}
+
+.switch:active {
+    transform: scale(0.98);
+}
+
+/* Small switch variant */
+.switch.small {
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 34px;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.2),
+        0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Standard slider thumb */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: #ffffff;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Small slider thumb */
+.switch.small .slider:before {
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+}
+
+/* Slider active state */
+input:checked + .slider {
+    background-color: #10b981;
+}
+
+input:focus + .slider {
+    box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.2),
+        0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+/* Standard slider movement */
+input:checked + .slider:before {
+    transform: translateX(26px);
+    background-color: #ffffff;
+}
+
+/* Small slider movement - corrected calculation */
+.switch.small input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* Pulse animation when toggled */
+@keyframes pulse {
+    0% { transform: scale(1) translateX(0); opacity: 1; }
+    50% { transform: scale(1.1) translateX(13px); opacity: 0.8; }
+    100% { transform: scale(1) translateX(26px); opacity: 1; }
+}
+
+/* Small slider pulse animation */
+@keyframes pulseSmall {
+    0% { transform: scale(1) translateX(0); opacity: 1; }
+    50% { transform: scale(1.1) translateX(11px); opacity: 0.8; }
+    100% { transform: scale(1) translateX(22px); opacity: 1; }
+}
+
+input:checked + .slider:before {
+    animation: pulse 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.switch.small input:checked + .slider:before {
+    animation: pulseSmall 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Completely redesigned settings heading */
+#settings {
+    color: #6366f1;
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 1.5rem 0 1rem;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+#settings::after {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(to right, #6366f1, #9333ea);
+    bottom: -8px;
+    left: 0;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+#settings:hover::after {
+    width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    #settings {
+        color: #8b5cf6;
+    }
+    #settings::after {
+        background: linear-gradient(to right, #8b5cf6, #c084fc);
+    }
+}
+
+/* Redesigned cards */
+.card {
+    background-color: #ffffff;
+    border-radius: 18px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.05),
+        0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #6366f1, #9333ea);
+    transition: height 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card:hover::before {
+    height: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #1f2937;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.2),
+            0 4px 6px -2px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card::before {
+        background: linear-gradient(to right, #8b5cf6, #c084fc);
+    }
+    
+    .card:hover {
+        box-shadow: 
+            0 20px 25px -5px rgba(0, 0, 0, 0.3),
+            0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Website name styling */
+#website-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #6366f1;
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, #6366f1, #9333ea);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+    #website-name {
+        background: linear-gradient(to right, #8b5cf6, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+}
+
+#whitelist-desc {
+    font-size: 0.85rem;
+    margin: 0.5em 0 0 0;
+    opacity: 0.8;
+}
+
+/* Status indicators */
+.blue-text {
+    color: #6366f1;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.blue-text::after {
+    content: '●';
+    font-size: 0.5rem;
+    position: absolute;
+    top: -2px;
+    right: -8px;
+    color: #10b981;
+}
+
+.red-text {
+    color: #ef4444;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.red-text::after {
+    content: '●';
+    font-size: 0.5rem;
+    position: absolute;
+    top: -2px;
+    right: -8px;
+    color: #ef4444;
+}
+
+/* Redesigned checkboxes */
+.form-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    background-origin: border-box;
+    user-select: none;
+    flex-shrink: 0;
+    height: 1.3em;
+    width: 1.3em;
+    border: 2px solid #9333ea;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease-in-out;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+
+.form-checkbox:checked {
+    background-color: #6366f1;
+    border-color: #6366f1;
+    color: #fff;
+}
+
+.form-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 0.2em;
+    left: 0.4em;
+    width: 0.3em;
+    height: 0.6em;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.form-checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    border-color: #6366f1;
+}
+
+.form-checkbox:checked:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.form-checkbox:hover:not(:checked) {
+    border-color: #8b5cf6;
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-checkbox {
+        border-color: #8b5cf6;
+        background-color: #1f2937;
+    }
+    
+    .form-checkbox:checked {
+        background-color: #8b5cf6;
+        border-color: #8b5cf6;
+    }
+    
+    .form-checkbox:focus {
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        border-color: #8b5cf6;
+    }
+    
+    .form-checkbox:checked:focus {
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+    }
+}
+
+.form-checkbox-label {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 2rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+.form-checkbox-label:hover {
+    color: #6366f1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-checkbox-label:hover {
+        color: #8b5cf6;
+    }
+}
+
+/* Redesigned sliders */
+.form-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 8px;
+    background: linear-gradient(to right, #6366f1 0%, #9333ea 100%);
+    outline: none;
+    opacity: 0.8;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.form-range:hover {
+    opacity: 1;
+}
+
+.form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid #6366f1;
+    transition: all 0.2s ease;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid #6366f1;
+    transition: all 0.2s ease;
+}
+
+.form-range::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-range {
+        background: linear-gradient(to right, #8b5cf6 0%, #c084fc 100%);
+    }
+    
+    .form-range::-webkit-slider-thumb {
+        background: #1f2937;
+        border: 2px solid #8b5cf6;
+    }
+    
+    .form-range::-moz-range-thumb {
+        background: #1f2937;
+        border: 2px solid #8b5cf6;
+    }
+}
+
+/* Value displays for sliders */
+#blur-amount-value, #strictness-value {
+    display: inline-block;
+    background: linear-gradient(to right, #6366f1, #9333ea);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 5px;
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    #blur-amount-value, #strictness-value {
+        background: linear-gradient(to right, #8b5cf6, #c084fc);
+    }
+}
+
+/* Enhanced tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip svg {
+    transition: transform 0.3s ease;
+    vertical-align: middle;
+}
+
+.tooltip:hover svg {
+    transform: scale(1.2);
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background: linear-gradient(135deg, #6366f1 0%, #9333ea 100%);
+    color: #fff;
+    text-align: left;
+    border-radius: 10px;
+    padding: 12px;
+    position: absolute;
+    z-index: 20;
+    bottom: 130%;
+    left: 50%;
+    margin-left: -110px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    font-size: 0.85rem;
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    line-height: 1.5;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #9333ea transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@media (prefers-color-scheme: dark) {
+    .tooltip .tooltiptext {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    }
+    .tooltip .tooltiptext::after {
+        border-color: #7c3aed transparent transparent transparent;
+    }
+}
+
+/* Better label styling */
+label {
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+    label {
+        color: #e5e7eb;
+    }
+}
+
+/* Special styling for the grayscale label */
+#grayscale-label {
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+    background-color: #f3f4f6;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#grayscale-label:hover {
+    background-color: #e5e7eb;
+}
+
+#grayscale {
+    margin-right: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+    #grayscale-label {
+        background-color: #374151;
+    }
+    #grayscale-label:hover {
+        background-color: #4b5563;
+    }
+}
+
+/* Button styling */
+.button {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366f1 0%, #9333ea 100%);
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(99, 102, 241, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(99, 102, 241, 0.3);
+}
+
+.button:hover::after {
+    opacity: 1;
+}
+
+.button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+
+.button-secondary {
+    background: #f3f4f6;
+    color: #4b5563;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.button-secondary:hover {
+    background: #e5e7eb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-secondary:active {
+    background: #d1d5db;
+}
+
+@media (prefers-color-scheme: dark) {
+    .button {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    }
+    
+    .button-secondary {
+        background: #374151;
+        color: #e5e7eb;
+    }
+    
+    .button-secondary:hover {
+        background: #4b5563;
+    }
+    
+    .button-secondary:active {
+        background: #6b7280;
+    }
+}
+
+/* Row styling improvements */
+.row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+/* Hidden elements */
+.hidden {
+    display: none;
+}
+
+#hide {
+    display: none;
+}
+
+#language {
+    display: none;
+}
+
+/* Info messages */
+.refresh {
+    font-size: 0.8rem;
+    color: #6366f1;
+    font-style: italic;
+}
+
+/* Feedback section styling */
+.feedback {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6366f1;
+    margin-top: 2rem;
+}
+
+.feedback a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.feedback a:hover {
+    background-color: rgba(99, 102, 241, 0.1);
+    text-decoration: underline;
+}
+
+/* Option grid styling */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Footer styling */
+.footer {
+    background-color: #f8f9ff;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 25px 25px 0px 0px;
+    box-shadow:
+        0 -5px 15px rgba(0, 0, 0, 0.05),
+        0 -1px 2px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .footer {
+        background-color: #1f2937;
+        box-shadow:
+            0px -5px 10px rgba(0, 0, 0, 0.2),
+            0px -1px 5px rgba(0, 0, 0, 0.14);
+    }
+}
+
+.footer img {
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.footer img:hover {
+    transform: scale(1.05);
+}
+
+/* Margin utilities */
+.mt-2 { margin-top: 0.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt--4 { margin-top: -1.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.ml-2 { margin-left: 0.5rem; }
+.ml-4 { margin-left: 1rem; }
+
+/* BMC button animations */
+.bmc-btn {
+    font-size: 0.9rem !important;
+    height: unset !important;
+    padding: 8px 14px !important;
+    min-width: unset !important;
+    text-align: left !important;
+    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.bmc-btn:hover {
+    opacity: 0.85 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15) !important;
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(0, -1px, 0); }
+    20%, 80% { transform: translate3d(0, 2px, 0); }
+    30%, 50%, 70% { transform: translate3d(0, -4px, 0); }
+    40%, 60% { transform: translate3d(0, 4px, 0); }
+}
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div>
+                <select id="language">
+                    <option value="en"></option>
+                    <option value="ar"></option>
+                    <option value="tr"></option>
+                    <option value="ur"></option>
+                </select>
+            </div>
+            <h1>SafeView</h1>
+            <div>
+                <label class="switch">
+                    <input name="status" type="checkbox" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="container" id="container">
+            <div class="mb-3 ml-2">
+                <h2 id="settings">Settings</h2>
+                <!-- refresh to see changes -->
+                <div class="hidden mt--4 refresh" id="refresh-message">
+                    Refresh the page to see changes.
+                </div>
+            </div>
+
+            <div class="card mb-3" id="whitelist-container">
+                <div class="row space-between">
+                    <div>
+                        <label for="whitelist" id="whitelist-label"
+                            ><span id="website-name">bing.com</span>
+                        </label>
+                        <p id="whitelist-desc">
+                            Detection is
+                            <span id="whitelist-status-on" class="blue-text">
+                                On
+                            </span>
+                            <span
+                                id="whitelist-status-off"
+                                class="red-text hidden"
+                            >
+                                Off
+                            </span>
+                            for this website
+                        </p>
+                    </div>
+                    <label class="switch small">
+                        <input
+                            name="whitelist"
+                            id="whitelist"
+                            type="checkbox"
+                        />
+                        <span class="slider small"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="card">
+                <!-- blurryStart mode setting toggle switch -->
+                <div id="hide" class="mb-2">
+                    <div class="row space-between">
+                        <label for="blurryStart-mode">
+                            <span id="blurryStart"> Blur media on load: </span>
+                            <!-- i icon tooltip -->
+                            <span class="tooltip">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="1em"
+                                    viewBox="0 0 512 512"
+                                >
+                                    <path
+                                        fill="#2196f3"
+                                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
+                                    />
+                                </svg>
+                                <span class="tooltiptext">
+                                    When enabled, all images and videos will be
+                                    blurred by default until detection starts.
+                                </span>
+                            </span>
+                        </label>
+                        <label class="switch small">
+                            <input name="blurryStartMode" type="checkbox" />
+                            <span class="slider small"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- blur amount setting slider -->
+                <div>
+                    <div class="">
+                        <label for="blur-amount" id="blurAmount"
+                            >Blur amount:
+                            <span id="blur-amount-value">20</span>
+                        </label>
+                        <div class="row space-between" style="gap: 1rem">
+                            <input
+                                type="range"
+                                id="blur-amount"
+                                name="blurAmount"
+                                min="10"
+                                max="30"
+                                value="20"
+                                class="form-range"
+                                width="50px"
+                            />
+                            <!-- checkbox for "grayscale?" -->
+                            <div class="mb-2 ml-4">
+                                <label
+                                    class="form-checkbox-label"
+                                    id="grayscale-label"
+                                >
+                                    <span id="grayscale">Black Overlay:</span>
+                                    <input
+                                        type="checkbox"
+                                        class="form-checkbox"
+                                        name="gray"
+                                        id="grayscale-checkbox"
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- strictness slider -->
+                <div id="hide" class="mb-2">
+                    <label for="blur-amount" id="strictness"
+                        >Strictness:
+                        <span id="strictness-value">30%</span>
+                    </label>
+                    <input
+                        type="range"
+                        id="strictness"
+                        name="strictness"
+                        min="0.1"
+                        max="1"
+                        value="0.5"
+                        step="0.1"
+                        class="form-range"
+                    />
+                </div>
+
+                <div id="hide" class="mb-2">
+                    <label>
+                        <span id="mediaToBlur"> Media to Blur </span>
+                        <span class="refresh"> (requires page refresh): </span>
+                    </label>
+                    <div class="options-grid">
+                        <label class="form-checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="blurImages"
+                                value="images"
+                            />
+                            <span id="blurImages">Images</span>
+                        </label>
+                        <label class="form-checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="blurVideos"
+                                value="videos"
+                            />
+                            <span id="blurVideos">Videos</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="hide" class="mb-2">
+                    <label>
+                        <span id="facesToBlur">Faces to Blur </span>
+                        <span class="refresh"> (requires page refresh): </span>
+                    </label>
+                    <div class="options-grid">
+                        <label class="form-checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="blurMale"
+                                value="male"
+                            />
+                            <span id="blurMale">Male</span>
+                        </label>
+                        <label class="form-checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="blurFemale"
+                                value="female"
+                            />
+                            <span id="blurFemale">Female</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="hide" class="mb-4">
+                    <label>
+                        <span id="unblurOnHover">Unblur on hover </span>
+                        <span class="refresh"> (requires page refresh): </span>
+                    </label>
+                    <div class="options-grid">
+                        <label class="form-checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="unblurImages"
+                                value="images"
+                            />
+                            <span id="unblurImages">Images</span>
+                        </label>
+                        <label class="form-checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="unblurVideos"
+                                value="videos"
+                            />
+                            <span id="unblurVideos">Videos</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="translations.js"></script>
+        <script src="popup.js"></script>
+    </body>
+</html>
